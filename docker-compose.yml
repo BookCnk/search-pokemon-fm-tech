@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+        DIRECT_URL: ${DIRECT_URL}
+        NODE_ENV: ${NODE_ENV:-production}
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PORT:-3001}
+      HOSTNAME: ${HOSTNAME:-0.0.0.0}
+    expose:
+      - "${PORT:-3001}"
+    restart: unless-stopped
+    networks:
+      - shared_proxy
+    # healthcheck:
+    #   test:
+    #     [
+    #       "CMD",
+    #       "node",
+    #       "-e",
+    #       "const http = require('http'); const req = http.get('http://localhost:' + (process.env.PORT || 3001) + '/', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }); req.on('error', () => process.exit(1));",
+    #     ]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
+
+networks:
+  shared_proxy:
+    external: true
