@@ -1,9 +1,24 @@
-# Studio Starter Template
+# search-pokemon-fm-tech
 
-Generic website starter built with Next.js 16, React 19, and Tailwind CSS 4.
-This repo was cleaned from an old bus-management project so it can be reused as a base template for a new website.
+A Pokemon search application built with Next.js 16, TypeScript, Apollo Client, and GraphQL.
 
-## Start
+## Features
+
+- Search Pokemon by name from the UI
+- Read search state from `?name=` or `?pokemon=` URL query params
+- Display Pokemon artwork, classification, types, height, weight, max HP, max CP, flee rate, resistances, weaknesses, attacks, and evolution requirements
+- Navigate between evolutions with Next.js routing
+- Handle missing Pokemon with a clean not-found state
+- Store recent searches in `localStorage`
+
+## Stack
+
+- Next.js 16 App Router
+- TypeScript
+- Apollo Client
+- Pokemon GraphQL API: `https://graphql-pokemon2.vercel.app/`
+
+## Local development
 
 ```bash
 npm install
@@ -12,67 +27,35 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## What remains
+Example URLs:
 
-- `src/app/layout.tsx` for metadata, fonts, and the root layout
-- `src/app/page.tsx` for the landing page template
-- `src/app/globals.css` for the visual system and base styling
-- `Dockerfile` and `docker-compose.yml` for standalone deployment
-
-## Suggested next edits
-
-1. Replace the brand name and copy in `src/app/page.tsx`
-2. Update metadata in `src/app/layout.tsx`
-3. Add or remove sections based on the real sitemap
-4. Introduce project-specific data, APIs, or CMS integrations only when needed
+- `http://localhost:3000/?name=bulbasaur`
+- `http://localhost:3000/?pokemon=pikachu`
 
 ## Environment
 
-No environment variables are required for the base template.
-See `.env.example` if you want a starter env file for deployment settings.
+The app works out of the box with the public Pokemon GraphQL endpoint.
 
-## Remove from Git
-
-Remove a file from Git tracking but keep it locally:
+If you want to override it, copy `.env.example` and set:
 
 ```bash
-git rm --cached <filename>
+POKEMON_GRAPHQL_ENDPOINT="https://graphql-pokemon2.vercel.app/"
 ```
 
-Force remove (use when file has local modifications):
+## Quality checks
 
 ```bash
-git rm -f --cached <filename>
-```
-
-Remove a directory from Git tracking but keep it locally:
-
-```bash
-git rm -r --cached <directory>
-```
-
-Force remove directory:
-
-```bash
-git rm -rf --cached <directory>
-```
-
-Commit the changes:
-
-```bash
-git commit -m "Remove <file/directory> from Git tracking"
-```
-
-Remove Git repository completely (PowerShell):
-
-```powershell
-Remove-Item -Recurse -Force .git
+npm run lint
+npm run build
 ```
 
 ## Deploy
 
-The project keeps `output: "standalone"` in `next.config.ts`, so it can be deployed with Docker or any Node.js host that supports standalone Next.js builds.
+The project is ready for Vercel deployment.
 
-```bash
-docker compose up --build
-```
+Recommended submission flow:
+
+1. Push the repository to GitHub.
+2. Import the repo into Vercel.
+3. Verify the public deployment in Incognito Mode.
+4. Submit the GitHub repo URL and Vercel URL.

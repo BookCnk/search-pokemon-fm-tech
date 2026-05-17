@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #f8f2e6;
-  --foreground: #18181b;
-  --surface: rgba(255, 255, 255, 0.74);
-  --surface-strong: rgba(255, 255, 255, 0.88);
-  --border: rgba(24, 24, 27, 0.1);
-  --shadow: 0 30px 90px rgba(88, 65, 24, 0.14);
+  --background: #0a0a0f;
+  --foreground: #e8e8ef;
+  --surface: rgba(18, 18, 28, 0.75);
+  --surface-strong: rgba(22, 22, 34, 0.88);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-heading: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --accent-red: #ff3d3d;
+  --accent-blue: #3b82f6;
+  --accent-yellow: #facc15;
+  --accent-purple: #a78bfa;
+  --glow-intensity: 0.18;
 }
 
 @theme inline {
@@ -26,25 +35,50 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(249, 115, 22, 0.18), transparent 34%),
-    radial-gradient(circle at 82% 18%, rgba(16, 185, 129, 0.16), transparent 28%),
-    linear-gradient(180deg, #fbf6ee 0%, #f6f3ea 42%, #e8efe6 100%);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
 }
 
+/* Animated aurora background */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(255, 61, 61, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(59, 130, 246, 0.10), transparent),
+    radial-gradient(ellipse 70% 50% at 50% 80%, rgba(167, 139, 250, 0.08), transparent),
+    radial-gradient(ellipse 50% 30% at 10% 60%, rgba(250, 204, 21, 0.06), transparent);
+  animation: aurora-shift 20s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes aurora-shift {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+/* Subtle grid overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
   background-image:
-    linear-gradient(rgba(24, 24, 27, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(24, 24, 27, 0.06) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3), transparent 82%);
-  opacity: 0.18;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 70%);
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -53,13 +87,250 @@ a {
 }
 
 ::selection {
-  background: #1f3a29;
-  color: #f8f2e6;
+  background: rgba(167, 139, 250, 0.4);
+  color: #fff;
 }
 
 .panel {
-  background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+  background: linear-gradient(135deg, var(--surface-strong), var(--surface));
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.panel:hover {
+  border-color: var(--border-hover);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Floating animation for Pokemon image */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.pokemon-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Subtle shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--foreground) 0%,
+    rgba(167, 139, 250, 0.8) 25%,
+    var(--foreground) 50%,
+    rgba(59, 130, 246, 0.8) 75%,
+    var(--foreground) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Pulse glow for stat cards */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(167, 139, 250, 0.08); }
+  50% { box-shadow: 0 0 30px rgba(167, 139, 250, 0.16); }
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(22, 22, 34, 0.9), rgba(18, 18, 28, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(167, 139, 250, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.1);
+}
+
+/* Type-colored accent glow for the dark card */
+.dark-stat-card {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.12), rgba(59, 130, 246, 0.08));
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Attack card styling */
+.attack-card {
+  background: rgba(18, 18, 28, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.attack-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Info list card */
+.info-card {
+  background: rgba(18, 18, 28, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+}
+
+/* Evolution card hover */
+.evo-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.evo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(167, 139, 250, 0.15);
+  border-color: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* Badge glow effect */
+.badge-glow {
+  position: relative;
+}
+
+.badge-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.badge-glow:hover::after {
+  opacity: 0.5;
+}
+
+/* Pokeball background decoration */
+@keyframes pokeball-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pokeball-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.pokeball-bg::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 30px solid rgba(255, 255, 255, 0.02);
+  top: -100px;
+  right: -100px;
+  animation: pokeball-spin 60s linear infinite;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #e8e8ef 0%, #a78bfa 50%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Search input focus glow */
+.search-glow:focus {
+  box-shadow:
+    0 0 0 3px rgba(167, 139, 250, 0.15),
+    0 0 40px rgba(167, 139, 250, 0.08);
+}
+
+/* Button gradient */
+.btn-primary {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  box-shadow: 0 8px 32px rgba(167, 139, 250, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(135deg, #4c1d95, #3b0764);
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Quick tag buttons */
+.quick-tag {
+  background: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  color: #c4b5fd;
+  transition: all 0.2s ease;
+}
+
+.quick-tag:hover {
+  background: rgba(167, 139, 250, 0.16);
+  border-color: rgba(167, 139, 250, 0.3);
+  color: #e8e8ef;
+  transform: translateY(-1px);
+}
+
+/* Recent search chips */
+.recent-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #a0a0b4;
+  transition: all 0.2s ease;
+}
+
+.recent-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #e8e8ef;
+}
+
+/* Damage badge */
+.dmg-badge {
+  background: linear-gradient(135deg, rgba(255, 61, 61, 0.15), rgba(255, 61, 61, 0.25));
+  border: 1px solid rgba(255, 61, 61, 0.3);
+  color: #ff8080;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

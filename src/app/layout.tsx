@@ -1,32 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Kanit, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const kanit = Kanit({
+const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-body",
-  subsets: ["latin", "thai"],
-  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const spaceGrotesk = Space_Grotesk({
-  variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
   title: {
-    default: "Studio Starter Template",
-    template: "%s | Studio Starter Template",
+    default: "Pokédex Search — FM Tech",
+    template: "%s | Pokédex Search",
   },
   description:
-    "Generic Next.js template for launching a polished marketing website without the old bus-management code.",
-  applicationName: "Studio Starter Template",
+    "A polished Pokemon search app built with Next.js, TypeScript, Apollo Client, and GraphQL.",
+  applicationName: "search-pokemon-fm-tech",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f8f2e6",
+  themeColor: "#0a0a0f",
 };
 
 export default function RootLayout({
@@ -35,10 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="th"
-      className={`${kanit.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className={`${kanit.className} min-h-screen`}>{children}</body>
+    <html lang="en" data-scroll-behavior="smooth" className={`antialiased ${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }

@@ -1,0 +1,207 @@
+"use client";
+
+import { useEffect, useState, useTransition } from "react";
+import { History, LoaderCircle, Search, Sparkles, X } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+type SearchFormProps = {
+  initialValue: string;
+};
+
+const RECENT_SEARCHES_KEY = "search-pokemon-fm-tech:recent-searches";
+const sampleNames = ["bulbasaur", "charmander", "squirtle", "pikachu"];
+
+function normalizePokemonName(value: string) {
+  return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function readRecentSearches() {
+  try {
+    const stored = window.localStorage.getItem(RECENT_SEARCHES_KEY);
+    if (!stored) {
+      return [];
+    }
+
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed.filter((value): value is string => typeof value === "string");
+  } catch {
+    return [];
+  }
+}
+
+export default function SearchForm({ initialValue }: SearchFormProps) {
+  const [draft, setDraft] = useState(initialValue);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setDraft(initialValue);
+  }, [initialValue]);
+
+  useEffect(() => {
+    setRecentSearches(readRecentSearches());
+  }, []);
+
+  const writeRecentSearches = (value: string) => {
+    setRecentSearches((current) => {
+      const nextSearches = [value, ...current.filter((item) => item !== value)]
+        .slice(0, 6);
+
+      try {
+        window.localStorage.setItem(
+          RECENT_SEARCHES_KEY,
+          JSON.stringify(nextSearches),
+        );
+      } catch {
+        // Ignore localStorage write issues and keep the search working.
+      }
+
+      return nextSearches;
+    });
+  };
+
+  const removeRecentSearch = (value: string) => {
+    setRecentSearches((current) => {
+      const nextSearches = current.filter((item) => item !== value);
+
+      try {
+        window.localStorage.setItem(
+          RECENT_SEARCHES_KEY,
+          JSON.stringify(nextSearches),
+        );
+      } catch {
+        // Ignore localStorage write issues and keep the search working.
+      }
+
+      return nextSearches;
+    });
+  };
+
+  const pushSearch = (rawValue: string) => {
+    const normalizedValue = normalizePokemonName(rawValue);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (!normalizedValue) {
+      params.delete("name");
+      params.delete("pokemon");
+      const nextUrl = params.toString() ? `${pathname}?${params}` : pathname;
+
+      startTransition(() => {
+        router.push(nextUrl);
+      });
+
+      return;
+    }
+
+    params.set("name", normalizedValue);
+    params.delete("pokemon");
+    writeRecentSearches(normalizedValue);
+
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`);
+    });
+  };
+
+  return (
+    <div className="space-y-5">
+      <form
+        className="rounded-[1.75rem] border border-white/8 bg-white/4 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+        onSubmit={(event) => {
+          event.preventDefault();
+          pushSearch(draft);
+        }}>
+        <label
+          htmlFor="pokemon-name"
+          className="mb-3 block text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+          ค้นหาโปเกมอน
+        </label>
+        <div className="flex flex-col gap-3 md:flex-row">
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-500" />
+            <input
+              id="pokemon-name"
+              name="pokemon-name"
+              value={draft}
+              onChange={(event) => {
+                setDraft(event.target.value);
+              }}
+              placeholder="ลองพิมพ์ bulbasaur, charmander, squirtle หรือ pikachu..."
+              className="search-glow h-14 w-full rounded-[1.25rem] border border-white/8 bg-white/5 pl-12 pr-4 text-base text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-purple-500/40"
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="btn-primary inline-flex h-14 items-center justify-center gap-2 rounded-[1.25rem] px-6 text-sm font-semibold text-white">
+            {isPending ? (
+              <LoaderCircle className="h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="h-4 w-4" />
+            )}
+            {isPending ? "กำลังค้นหา..." : "ค้นหา"}
+          </button>
+        </div>
+      </form>
+
+      <div className="flex flex-wrap gap-2">
+        {sampleNames.map((name) => (
+          <button
+            key={name}
+            type="button"
+            onClick={() => {
+              setDraft(name);
+              pushSearch(name);
+            }}
+            className="quick-tag rounded-full px-3 py-1.5 text-sm font-medium">
+            {name}
+          </button>
+        ))}
+      </div>
+
+      {recentSearches.length > 0 ? (
+        <div className="rounded-[1.5rem] border border-white/6 bg-white/3 p-4 backdrop-blur">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-400">
+            <History className="h-4 w-4" />
+            ประวัติการค้นหาล่าสุด
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {recentSearches.map((name) => (
+              <div
+                key={name}
+                className="recent-chip inline-flex items-center rounded-full pr-1 text-sm">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDraft(name);
+                    pushSearch(name);
+                  }}
+                  className="px-3 py-1.5 font-medium">
+                  {name}
+                </button>
+                <button
+                  type="button"
+                  aria-label={`ลบ ${name} ออกจากประวัติการค้นหาล่าสุด`}
+                  onClick={() => {
+                    removeRecentSearch(name);
+                  }}
+                  className="rounded-full p-1 text-slate-600 transition hover:bg-white/8 hover:text-slate-300">
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
