@@ -1,16 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Mali } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-heading",
+const mali = Mali({
+  subsets: ["latin", "thai"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-mali",
   display: "swap",
 });
 
@@ -25,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0f",
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({
@@ -34,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`antialiased ${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="th" data-scroll-behavior="smooth" className={`antialiased ${mali.variable}`}>
       <body suppressHydrationWarning className="min-h-screen">
         {children}
       </body>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { History, LoaderCircle, Search, Sparkles, X } from "lucide-react";
+import { History, LoaderCircle, Search, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type SearchFormProps = {
@@ -112,19 +112,19 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
   return (
     <div className="space-y-4">
       <form
-        className="rounded-[0.5rem] border border-zinc-800 bg-zinc-900 p-5 shadow-sm"
+        className="panel rounded-[0.5rem] p-5 shadow-sm"
         onSubmit={(event) => {
           event.preventDefault();
           pushSearch(draft);
         }}>
         <label
           htmlFor="pokemon-name"
-          className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500">
+          className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-[#978F66]">
           ค้นหาโปเกมอน
         </label>
         <div className="flex flex-col gap-2.5 md:flex-row">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#978F66]" />
             <input
               id="pokemon-name"
               name="pokemon-name"
@@ -133,7 +133,7 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
                 setDraft(event.target.value);
               }}
               placeholder="ลองพิมพ์ bulbasaur, charmander, squirtle หรือ pikachu..."
-              className="search-glow h-11 w-full rounded-[0.375rem] border border-zinc-700 bg-zinc-800 pl-10 pr-4 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-blue-500"
+              className="search-glow h-11 w-full rounded-[0.375rem] border border-[#7A5133] bg-[#2B190F]/80 pl-10 pr-4 text-sm text-[#FBF5E0] outline-none transition placeholder:text-[#A79870] focus:border-[#E4D6A9]"
               autoComplete="off"
               spellCheck={false}
             />
@@ -142,7 +142,7 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
           <button
             type="submit"
             disabled={isPending}
-            className="btn-primary inline-flex h-11 items-center justify-center gap-2 rounded-[0.375rem] px-5 text-sm font-medium text-white transition">
+            className="btn-primary inline-flex h-11 items-center justify-center gap-2 rounded-[0.375rem] px-5 text-sm font-medium transition">
             {isPending ? (
               <LoaderCircle className="h-4 w-4 animate-spin" />
             ) : (
@@ -162,15 +162,15 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
               setDraft(name);
               pushSearch(name);
             }}
-            className="quick-tag rounded-[0.375rem] px-2.5 py-1 text-xs font-medium border border-zinc-800 bg-zinc-900 text-zinc-300 hover:bg-zinc-800 transition">
+            className="quick-tag rounded-[0.375rem] px-2.5 py-1 text-xs font-medium transition">
             {name}
           </button>
         ))}
       </div>
 
       {recentSearches.length > 0 ? (
-        <div className="rounded-[0.5rem] border border-zinc-800 bg-zinc-900 p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+        <div className="panel rounded-[0.5rem] p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#978F66]">
             <History className="h-3.5 w-3.5" />
             ประวัติการค้นหาล่าสุด
           </div>
@@ -178,14 +178,14 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
             {recentSearches.map((name) => (
               <div
                 key={name}
-                className="recent-chip inline-flex items-center rounded-[0.375rem] border border-zinc-800 bg-zinc-950 pr-1 text-xs">
+                className="recent-chip inline-flex items-center rounded-[0.375rem] pr-1 text-xs">
                 <button
                   type="button"
                   onClick={() => {
                     setDraft(name);
                     pushSearch(name);
                   }}
-                  className="px-2.5 py-1 font-medium text-zinc-300 hover:text-white transition">
+                  className="px-2.5 py-1 font-medium text-[#E4D6A9] transition hover:text-[#FBF5E0]">
                   {name}
                 </button>
                 <button
@@ -194,7 +194,7 @@ export default function SearchForm({ initialValue }: SearchFormProps) {
                   onClick={() => {
                     removeRecentSearch(name);
                   }}
-                  className="rounded-[0.25rem] p-0.5 text-zinc-600 transition hover:bg-zinc-800 hover:text-zinc-300">
+                  className="rounded-[0.25rem] p-0.5 text-[#A79870] transition hover:bg-[#6E472B]/45 hover:text-[#E4D6A9]">
                   <X className="h-3 w-3" />
                 </button>
               </div>

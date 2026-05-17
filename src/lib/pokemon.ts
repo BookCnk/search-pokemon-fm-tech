@@ -27,13 +27,13 @@ export function buildPokemonHref(name: string) {
 }
 
 export function formatStat(value: number | null | undefined) {
-  return typeof value === "number" ? value.toLocaleString("en-US") : "Unknown";
+  return typeof value === "number" ? value.toLocaleString("en-US") : "ไม่ระบุ";
 }
 
 export function formatFleeRate(value: number | null | undefined) {
   return typeof value === "number"
     ? `${Math.round(value * 100)}%`
-    : "Unknown";
+    : "ไม่ระบุ";
 }
 
 type PokemonQueryResult = {

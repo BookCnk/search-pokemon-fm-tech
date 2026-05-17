@@ -17,14 +17,15 @@ export default function PokemonEvolutions({
   if (evolutions.length === 0) {
     return (
       <section className="panel rounded-[0.5rem] p-6 shadow-sm">
-        <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#978F66]">
           สายวิวัฒนาการ
         </p>
-        <h2 className="mt-1 text-xl font-bold text-zinc-100">
-          ไม่พบร่างวิวัฒนาการขั้นถัดไป
+        <h2 className="mt-1 text-xl font-bold text-[#FBF5E0]">
+          ไม่พบข้อมูลวิวัฒนาการขั้นถัดไป
         </h2>
-        <p className="mt-2 text-sm text-zinc-400">
-          ระบบ API ไม่พบข้อมูลการวิวัฒนาการขั้นถัดไปของ {currentPokemonName}
+        <p className="mt-2 text-sm text-[#C6B990]">
+          GraphQL API ไม่มีข้อมูลวิวัฒนาการขั้นถัดไปของ{" "}
+          {currentPokemonName}
         </p>
       </section>
     );
@@ -34,15 +35,16 @@ export default function PokemonEvolutions({
     <section className="panel rounded-[0.5rem] p-6 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#978F66]">
             สายวิวัฒนาการ
           </p>
-          <h2 className="mt-1 text-xl font-bold text-zinc-100">
-            วิวัฒนาการร่างถัดไป
+          <h2 className="mt-1 text-xl font-bold text-[#FBF5E0]">
+            วิวัฒนาการขั้นถัดไป
           </h2>
         </div>
-        <p className="max-w-xl text-xs leading-relaxed text-zinc-400">
-          การ์ดแต่ละใบเชื่อมโยงผ่านระบบ Next.js Link ซึ่งจะอัปเดต URL เพื่อสลับข้อมูลร่างถัดไปในทันทีที่กดเลือก
+        <p className="max-w-xl text-xs leading-relaxed text-[#C6B990]">
+          การ์ดแต่ละใบเชื่อมโยงด้วย Next.js Link เพื่ออัปเดต URL
+          และสลับข้อมูลโปเกมอนที่เลือกได้ทันที
         </p>
       </div>
 
@@ -51,27 +53,27 @@ export default function PokemonEvolutions({
           <Link
             key={evolution.id}
             href={buildPokemonHref(evolution.name)}
-            className="evo-card group rounded-[0.375rem] border border-zinc-800 bg-zinc-950 p-4 transition-colors">
+            className="evo-card group rounded-[0.375rem] p-4 transition-colors">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-                  ร่างพัฒนาถัดไป
+                <p className="text-xs font-medium uppercase tracking-wider text-[#978F66]">
+                  ร่างถัดไป
                 </p>
-                <h3 className="mt-1 text-lg font-bold text-zinc-100">
+                <h3 className="mt-1 text-lg font-bold text-[#FBF5E0]">
                   {evolution.name}
                 </h3>
                 {evolution.classification ? (
-                  <p className="mt-1 text-xs text-zinc-400">
+                  <p className="mt-1 text-xs text-[#C6B990]">
                     {evolution.classification}
                   </p>
                 ) : null}
               </div>
-              <div className="inline-flex h-8 w-8 items-center justify-center rounded-[0.25rem] bg-zinc-900 border border-zinc-800 text-zinc-300 transition group-hover:bg-zinc-800 group-hover:text-white">
+              <div className="inline-flex h-8 w-8 items-center justify-center rounded-[0.25rem] border border-[#6E472B]/50 bg-[#3D2618]/55 text-[#E4D6A9] transition group-hover:bg-[#6E472B]/45 group-hover:text-[#FBF5E0]">
                 <ArrowRight className="h-4 w-4" />
               </div>
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-[0.25rem] bg-zinc-900 border border-zinc-850 p-4">
+            <div className="mt-4 overflow-hidden rounded-[0.25rem] border border-[#6E472B]/45 bg-[#2F1C11]/45 p-4">
               <div className="relative mx-auto aspect-square max-w-[160px]">
                 <Image
                   src={evolution.image}
@@ -95,9 +97,9 @@ export default function PokemonEvolutions({
               ))}
             </div>
 
-            <div className="mt-4 inline-flex items-center gap-1.5 rounded-[0.25rem] bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-300 group-hover:bg-zinc-800 transition">
+            <div className="mt-4 inline-flex items-center gap-1.5 rounded-[0.25rem] border border-[#6E472B]/50 bg-[#3D2618]/55 px-2.5 py-1 text-xs font-medium text-[#E4D6A9] transition group-hover:bg-[#6E472B]/45">
               <Orbit className="h-3.5 w-3.5" />
-              ดูข้อมูล {evolution.name}
+              ดูรายละเอียด {evolution.name}
             </div>
           </Link>
         ))}

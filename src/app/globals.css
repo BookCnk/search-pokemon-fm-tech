@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --surface: #18181b;
-  --border: #27272a;
-  --border-hover: #3f3f46;
-  --text-muted: #a1a1aa;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --accent-blue: #3b82f6;
-  --accent-red: #ef4444;
+  --background: #20120b;
+  --foreground: #f7efd4;
+  --surface: rgba(61, 38, 24, 0.88);
+  --surface-strong: rgba(82, 52, 34, 0.92);
+  --surface-soft: rgba(98, 43, 20, 0.24);
+  --surface-elevated: rgba(111, 73, 45, 0.24);
+  --border: rgba(228, 214, 169, 0.16);
+  --border-hover: rgba(228, 214, 169, 0.34);
+  --text-muted: #c6b990;
+  --text-soft: #978f66;
+  --accent: #995f2f;
+  --accent-strong: #622b14;
+  --accent-soft: #e4d6a9;
+  --accent-olive: #978f66;
 }
 
 @theme inline {
@@ -24,19 +29,23 @@
 }
 
 html {
+  --font-sans: var(--font-mali), "Inter", system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
   background-color: var(--background);
+  background-image:
+    radial-gradient(circle at top, rgba(228, 214, 169, 0.12), transparent 38%),
+    radial-gradient(circle at bottom right, rgba(151, 143, 102, 0.16), transparent 28%),
+    linear-gradient(180deg, #4a2d1c 0%, #2b190f 54%, #1b1009 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
   line-height: 1.5;
 }
-
-/* Simple solid layout - no flashy AI auroras or floating grids */
 
 main {
   position: relative;
@@ -49,15 +58,16 @@ a {
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #fff;
+  background: rgba(228, 214, 169, 0.24);
+  color: #2f1c11;
 }
 
-/* Premium flat panels with crisp borders */
 .panel {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 18px 48px rgba(20, 10, 6, 0.22),
+    inset 0 1px 0 rgba(228, 214, 169, 0.04);
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -73,13 +83,11 @@ a {
   display: none;
 }
 
-/* Clean stationary image container - no floating animation */
 .pokemon-float {
   transform: none !important;
   animation: none !important;
 }
 
-/* Clean elegant solid title text - no futuristic neon shimmer */
 .shimmer-text {
   background: none !important;
   -webkit-background-clip: initial !important;
@@ -89,26 +97,25 @@ a {
   animation: none !important;
 }
 
-/* Flat, elegant stat cards */
 .stat-card {
-  background-color: #202024;
+  background-color: var(--surface-elevated);
   border: 1px solid var(--border);
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .stat-card:hover {
   border-color: var(--border-hover);
-  background-color: #27272a;
+  background-color: rgba(153, 95, 47, 0.22);
 }
 
 .dark-stat-card {
-  background-color: #27272a;
-  border: 1px solid var(--border-hover);
+  background:
+    linear-gradient(135deg, rgba(98, 43, 20, 0.64), rgba(151, 143, 102, 0.24));
+  border: 1px solid rgba(228, 214, 169, 0.22);
 }
 
-/* Flat attack cards */
 .attack-card {
-  background-color: #1e1e24;
+  background-color: rgba(47, 28, 17, 0.9);
   border: 1px solid var(--border);
   transition: border-color 0.2s ease;
 }
@@ -117,92 +124,117 @@ a {
   border-color: var(--border-hover);
 }
 
-/* Info card flat style */
 .info-card {
-  background-color: #1c1c21;
+  background-color: rgba(51, 31, 20, 0.9);
   border: 1px solid var(--border);
 }
 
-/* Clean evolution card */
 .evo-card {
-  background-color: var(--surface);
+  background-color: rgba(51, 31, 20, 0.92);
   border: 1px solid var(--border);
   transition: all 0.2s ease;
 }
 
 .evo-card:hover {
   border-color: var(--border-hover);
-  background-color: #202024;
+  background-color: rgba(73, 45, 30, 0.96);
 }
 
-/* No glowing effects */
 .badge-glow::after {
   display: none !important;
 }
 
-/* Simple text instead of complex gradient */
 .gradient-text {
   color: var(--foreground);
 }
 
-/* Flat, accessible search input focus state */
 .search-glow:focus {
-  border-color: var(--accent-blue);
+  border-color: var(--accent-soft);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px rgba(228, 214, 169, 0.14);
 }
 
-/* Minimalist primary button styling */
 .btn-primary {
-  background-color: var(--accent-blue);
-  color: #ffffff;
-  transition: background-color 0.2s ease;
+  background:
+    linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: var(--accent-soft);
+  box-shadow: 0 12px 28px rgba(34, 20, 12, 0.28);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .btn-primary:hover {
-  background-color: #2563eb;
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
-  background-color: #27272a;
+  background: rgba(98, 43, 20, 0.35);
   color: var(--text-muted);
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Clean quick tags */
 .quick-tag {
-  background-color: #27272a;
+  background-color: rgba(98, 43, 20, 0.22);
   border: 1px solid var(--border);
-  color: var(--foreground);
-  transition: background-color 0.2s ease;
+  color: var(--accent-soft);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .quick-tag:hover {
-  background-color: #3f3f46;
+  background-color: rgba(153, 95, 47, 0.26);
+  border-color: var(--border-hover);
 }
 
-/* Clean recent search chips */
 .recent-chip {
-  background-color: #202024;
+  background-color: rgba(47, 28, 17, 0.78);
   border: 1px solid var(--border);
   color: var(--text-muted);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .recent-chip:hover {
-  background-color: #27272a;
+  background-color: rgba(98, 43, 20, 0.28);
   color: var(--foreground);
 }
 
-/* Clean flat damage badge */
 .dmg-badge {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #f87171;
+  background-color: rgba(228, 214, 169, 0.08);
+  border: 1px solid rgba(228, 214, 169, 0.22);
+  color: var(--accent-soft);
 }
 
-/* Custom scrollbars */
+.theme-badge {
+  background-color: rgba(228, 214, 169, 0.08);
+  border: 1px solid rgba(228, 214, 169, 0.18);
+  color: var(--accent-soft);
+}
+
+.theme-badge-strong {
+  background-color: rgba(153, 95, 47, 0.24);
+  border: 1px solid rgba(228, 214, 169, 0.16);
+  color: var(--accent-soft);
+}
+
+.theme-code {
+  background-color: rgba(34, 20, 12, 0.48);
+  border: 1px solid rgba(228, 214, 169, 0.12);
+  color: var(--accent-soft);
+}
+
+.error-panel {
+  background:
+    linear-gradient(135deg, rgba(98, 43, 20, 0.74), rgba(153, 95, 47, 0.34));
+  border: 1px solid rgba(228, 214, 169, 0.18);
+  box-shadow: 0 18px 48px rgba(20, 10, 6, 0.22);
+}
+
+.error-badge {
+  background-color: rgba(98, 43, 20, 0.34);
+  border: 1px solid rgba(228, 214, 169, 0.16);
+  color: var(--accent-soft);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

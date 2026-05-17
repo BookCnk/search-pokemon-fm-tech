@@ -15,8 +15,8 @@ type AttackListProps = {
 
 function AttackList({ title, icon: Icon, attacks }: AttackListProps) {
   return (
-    <div className="rounded-[0.375rem] border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
-      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+    <div className="rounded-[0.375rem] border border-[#6E472B]/50 bg-[#2F1C11]/45 p-4 shadow-sm">
+      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#978F66]">
         <Icon className="h-4 w-4" />
         {title}
       </div>
@@ -28,7 +28,7 @@ function AttackList({ title, icon: Icon, attacks }: AttackListProps) {
               className="attack-card rounded-[0.25rem] p-3.5 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-base font-semibold text-zinc-100">
+                  <p className="text-base font-semibold text-[#FBF5E0]">
                     {attack.name}
                   </p>
                   <div
@@ -45,8 +45,8 @@ function AttackList({ title, icon: Icon, attacks }: AttackListProps) {
             </article>
           ))
         ) : (
-          <p className="rounded-[0.25rem] border border-dashed border-zinc-800 bg-zinc-900/50 p-4 text-xs text-zinc-500">
-            ไม่มีข้อมูลท่าโจมตีในหมวดหมู่นี้
+          <p className="rounded-[0.25rem] border border-dashed border-[#6E472B]/50 bg-[#2F1C11]/35 p-4 text-xs text-[#C6B990]">
+            ไม่มีข้อมูลท่าโจมตีในหมวดนี้
           </p>
         )}
       </div>
@@ -62,15 +62,16 @@ export default function PokemonAttacks({
     <section className="panel rounded-[0.5rem] p-6 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-            รายการท่าโจมตี
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#978F66]">
+            ข้อมูลท่าโจมตี
           </p>
-          <h2 className="mt-1 text-xl font-bold text-zinc-100">
+          <h2 className="mt-1 text-xl font-bold text-[#FBF5E0]">
             ชุดท่าโจมตีเร็วและท่าโจมตีพิเศษ
           </h2>
         </div>
-        <p className="max-w-xl text-xs leading-relaxed text-zinc-400">
-          ค่าความเสียหาย (DMG) ดึงมาจาก GraphQL API โดยตรง เพื่อความสะดวกในการเปรียบเทียบพลังโจมตี
+        <p className="max-w-xl text-xs leading-relaxed text-[#C6B990]">
+          ค่าความเสียหาย (DMG) ดึงจาก GraphQL API โดยตรง
+          เพื่อช่วยให้เปรียบเทียบพลังโจมตีได้สะดวกขึ้น
         </p>
       </div>
 
