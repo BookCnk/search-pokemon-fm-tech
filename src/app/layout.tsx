@@ -35,7 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`antialiased ${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className="min-h-screen">{children}</body>
+      <body suppressHydrationWarning className="min-h-screen">
+        {children}
+      </body>
     </html>
   );
 }

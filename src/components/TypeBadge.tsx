@@ -30,7 +30,7 @@ type TypeBadgeProps = {
 export default function TypeBadge({ type }: TypeBadgeProps) {
   return (
     <span
-      className={`rounded-full border px-3 py-1.5 text-sm font-semibold ${typeBadgeClassName(
+      className={`rounded-[0.25rem] border px-2.5 py-0.5 text-xs font-medium ${typeBadgeClassName(
         type,
       )}`}>
       {type}
